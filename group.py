@@ -6,16 +6,14 @@ def match(new, groups):
     for i in groups:
         now=[]
         for a in groups[i]:
-            now.append(compare.compare(new, a))
-        now=(statistics.mean(now)
-             +statistics.median(now))
-        potential.append([now/2, i])
+            now.append(compare.CompareDict(new, a))
+        now=statistics.mean(now)
+        potential.append([now, i])
     return potential
 
 def creategroups(data, threshold=0.8):
     groups={}
     for a in range(len(data)):
-        print(a, len(groups))
         i=data[a]
         result=match(i, groups)
         if result:
