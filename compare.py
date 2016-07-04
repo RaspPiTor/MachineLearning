@@ -1,21 +1,23 @@
 def CompareDict(one, two):
-    if one==two:
+    if str(one)==str(two):
         return 1
     result=[]
     add=result.append
-    for i in set(list(one)+list(two)):         
+    for i in set(list(one)+list(two)):
         try:
-            if one[i]==two[i]:
+            first=one[i]
+            second=two[i]
+            if str(first)==str(second):
                 add(1)
             else:
-                now=[one[i]/two[i], two[i]/one[i]]
+                now=[first/second, second/first]
                 if now[0]<now[1]:
                     add(now[0])
                 else:
                     add(now[1])
         except TypeError:
-            if type(one[i])==dict and type(two[i])==dict:
-                add(CompareDict(one[i], two[i]))
+            if type(first)==dict and type(second)==dict:
+                add(CompareDict(first, second))
         except IndexError:
             add(0)
         except Exception:
