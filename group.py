@@ -1,18 +1,19 @@
 from compare import CompareDict
 
 def match(new, groups):
-    potential=[]
+    potential=list()
     add=potential.append
+    compare=CompareDict
     for i in groups:
-        now=[]
+        now=list()
         nowadd=now.append
         for a in groups[i]:
-            nowadd(CompareDict(new, a))
+            nowadd(compare(new, a))
         add([sum(now)/len(now), i])
     return potential
 
 def creategroups(data, threshold=0.8):
-    groups={}
+    groups=dict()
     groups[hash(str(data[0]))]=[data[0]]
     for i in data:
         result=match(i, groups)

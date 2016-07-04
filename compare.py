@@ -10,7 +10,7 @@ def CompareDict(one, two):
             if str(first)==str(second):
                 add(1)
             else:
-                if first>second:
+                if first<second:
                     add(first/second)
                 else:
                     add(second/first)
