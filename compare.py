@@ -1,16 +1,17 @@
 __cache__=dict()
 def CompareDict(one, two):
     allowed=[dict, int, float]
-    onev=[a for a in one.values() if type(a) in allowed]
-    twov=[a for a in two.values() if type(a) in allowed]
+    diff=set(one)^set(two)
+    onev=[one[a] for a in one if type(one[a]) in allowed and a not in diff]
+    twov=[two[a] for a in two if type(two[a]) in allowed and a not in diff]
     if onev==twov:
         return 1
+    key='%s%s' % (str(onev), str(twov))
     try:
-        key='%s%s' % (str(onev), str(twov))
         return __cache__[key]
     except KeyError:
         pass
-    result=list()
+    result=[0]*len(diff)
     add=result.append
     for first, second in zip(onev, twov):
         try:
