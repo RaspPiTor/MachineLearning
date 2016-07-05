@@ -1,13 +1,39 @@
+global cache
+cache={}
+class Compare():
+    def __init__(self):
+        self.cache={}
+        self.valcache
+    def CompareDict(self, one, two):
+        if str(onev) == str(twov):
+            return 1
+        allowed=[dict, list, int, float]
+        valcache=self.valcache
+        try:
+            onev=valcache[one]
+        except KeyError:
+            onev=[a for a in one.values() if type(a) in allowed]
+            valcache[one]=onev
+        try:
+            twov=valcache[two]
+        except KeyError:
+            twov=[a for a in two.values() if type(a) in allowed]
+            
 def CompareDict(one, two):
-    if str(one)==str(two):
+    allowed=[dict, list, int, float]
+    onev=[a for a in one.values() if type(a) in allowed]
+    twov=[a for a in two.values() if type(a) in allowed]
+    if onev==twov:
         return 1
+    try:
+        return cache[hash(str(onev)+str(twov))]
+    except KeyError:
+        pass
     result=list()
     add=result.append
-    for i in set(list(one)+list(two)):
+    for first, second in zip(onev, twov):
         try:
-            first=one[i]
-            second=two[i]
-            if str(first)==str(second):
+            if first==second:
                 add(1)
             else:
                 if first<second:
@@ -17,11 +43,13 @@ def CompareDict(one, two):
         except TypeError:
             if type(first)==dict and type(second)==dict:
                 add(CompareDict(first, second))
-        except IndexError:
+        except KeyError:
             add(0)
-        except Exception:
-            pass
+        except Exception as error:
+            print(error, type(error))
     try:
-        return sum(result)/len(result)
+        result=sum(result)/len(result)
     except ZeroDivisionError:
-        return 0
+        result=0
+    cache[hash(str(onev)+str(twov))]=result
+    return result

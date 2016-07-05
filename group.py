@@ -6,9 +6,7 @@ def match(new, groups):
     compare=CompareDict
     for i in groups:
         now=list()
-        nowadd=now.append
-        for a in groups[i]:
-            nowadd(compare(new, a))
+        now=[compare(new, a) for a in groups[i]]
         add([sum(now)/len(now), i])
     return potential
 
