@@ -1,13 +1,20 @@
 from compare import CompareDict
-
+__cache__=dict()
 def match(new, groups):
     potential=list()
     add=potential.append
     compare=CompareDict
+    newstr=str(new)
     for i in groups:
-        now=list()
-        now=[compare(new, a) for a in groups[i]]
-        add([sum(now)/len(now), i])
+        key='%s%s%s' %(i, newstr, len(groups[i]))
+        try:
+            now=__cache__[key]
+        except KeyError:
+            now=list()
+            now=[compare(new, a) for a in groups[i]]
+            now=sum(now)/len(now)
+            __cache__[key]=now
+        add([now, i])
     return potential
 
 def creategroups(data, threshold=0.8):
