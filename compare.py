@@ -1,24 +1,5 @@
 global cache
 cache={}
-class Compare():
-    def __init__(self):
-        self.cache={}
-        self.valcache
-    def CompareDict(self, one, two):
-        if str(onev) == str(twov):
-            return 1
-        allowed=[dict, list, int, float]
-        valcache=self.valcache
-        try:
-            onev=valcache[one]
-        except KeyError:
-            onev=[a for a in one.values() if type(a) in allowed]
-            valcache[one]=onev
-        try:
-            twov=valcache[two]
-        except KeyError:
-            twov=[a for a in two.values() if type(a) in allowed]
-            
 def CompareDict(one, two):
     allowed=[dict, list, int, float]
     onev=[a for a in one.values() if type(a) in allowed]
