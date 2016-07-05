@@ -1,5 +1,4 @@
-global cache
-cache={}
+__cache__={}
 def CompareDict(one, two):
     allowed=[dict, list, int, float]
     onev=[a for a in one.values() if type(a) in allowed]
@@ -7,7 +6,7 @@ def CompareDict(one, two):
     if onev==twov:
         return 1
     try:
-        return cache[hash(str(onev)+str(twov))]
+        return __cache__[hash(str(onev)+str(twov))]
     except KeyError:
         pass
     result=list()
@@ -32,5 +31,5 @@ def CompareDict(one, two):
         result=sum(result)/len(result)
     except ZeroDivisionError:
         result=0
-    cache[hash(str(onev)+str(twov))]=result
+    __cache__[hash(str(onev)+str(twov))]=result
     return result
